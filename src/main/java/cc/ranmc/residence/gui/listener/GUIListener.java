@@ -442,9 +442,26 @@ public class GUIListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
-        if (p.getInventory().getItemInMainHand().getType() == Material.WOODEN_HOE
-                && event.getAction() == Action.RIGHT_CLICK_AIR
-                && plugin.getConfig().getBoolean("right-click-action")) {
+        if (p.getInventory().getItemInMainHand().getType() != Material.WOODEN_HOE) return;
+
+        // 左键方块 -> 点击选取第一个点，弹出创建界面
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            p.sendMessage(color("&a已选取第一个点"));
+            InputUtil.open(p, "创建领地", "请输入领地名", result ->
+                    p.chat("/res create " + result));
+            return;
+        }
+
+        // 右键方块 -> 点击选取第二个点，弹出创建界面
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            p.sendMessage(color("&a已选取第二个点"));
+            InputUtil.open(p, "创建领地", "请输入领地名", result ->
+                    p.chat("/res create " + result));
+            return;
+        }
+
+        // 右键空气 -> 打开菜单（配置开关）
+        if (event.getAction() == Action.RIGHT_CLICK_AIR && plugin.getConfig().getBoolean("right-click-action")) {
             ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByLoc(p.getLocation());
             if (claimedResidence != null) {
                 p.chat("/resgui");
