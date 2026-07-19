@@ -1,0 +1,22 @@
+name: ResidenceGUI
+main: cc.ranmc.residence.gui.Main
+description: '桃花源定制24k纯钛合金超级无敌终终终终极版的领地菜单插件'
+website: https://www.ranmc.cc/
+author: Ranica
+version: ${project.version}
+api-version: "26.2"
+softdepend: [Residence]
+
+permissions: 
+  resgui.admin:
+    default: op
+    description: 'admin only'
+
+  resgui.user:
+    default: true
+    description: 'user only'
+
+commands:
+  resgui:
+    description: resgui
+    usage: /<command>

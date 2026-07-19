@@ -1,0 +1,5 @@
+# 右键打开菜单
+right-click-action: false
+
+# 玻璃方块持续时间（秒）
+glass-show-time: 5
