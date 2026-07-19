@@ -25,7 +25,7 @@ public class Main extends JavaPlugin {
         print(color("&e-----------------------"));
         print(color("&dBy Ranica"));
         print(color("&bVersion: " + getPluginMeta().getVersion()));
-        print(color("&chttps://www.ranmc.cn/"));
+        print(color("&chttps://www.ranmc.cc/"));
         print(color("&e-----------------------"));
 
         // 注册指令
