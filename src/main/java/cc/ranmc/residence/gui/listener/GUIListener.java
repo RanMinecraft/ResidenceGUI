@@ -288,6 +288,7 @@ public class GUIListener implements Listener {
                 ItemStack closeItem = BasicUtil.createItem(Material.BARRIER, "&b返回菜单");
                 inventory.setItem(45, closeItem);
                 inventory.setItem(53, closeItem);
+                BasicUtil.fillEmptySlots(inventory);
                 p.openInventory(inventory);
                 return;
             }

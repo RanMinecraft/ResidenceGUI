@@ -167,7 +167,9 @@ public class ResguiCommand implements CommandExecutor {
         inventory.setItem(46, BasicUtil.createItem(Material.BEACON, "&b设置传送点", "&e记录你所在位置", "&e设为领地传送点"));
         inventory.setItem(47, BasicUtil.createItem(Material.POWERED_RAIL, "&b显示边界", "&e显示领地实际边界"));
         inventory.setItem(48, BasicUtil.createItem(Material.LAVA_BUCKET, "&b删除领地", "&e删除不会退还金币", "&e请谨慎决定后操作"));
-        inventory.setItem(50, BasicUtil.createItem(Material.WOODEN_HOE, "&b调整范围", "&e左键扩大领地", "&e右键缩小领地"));
+        inventory.setItem(50, BasicUtil.createItem(Material.WOODEN_HOE, "&b调整范围", "&e左键扩大领地", "&e右键缩小领地",
+                "&e扩大需看着需要扩大的方向",
+                "&e缩小需看着需要缩小的方向"));
         inventory.setItem(51, BasicUtil.createItem(Material.LEATHER, "&b设置提示", "&e左键设置进入领地消息", "&e右键设置离开领地消息"));
         inventory.setItem(52, BasicUtil.createItem(Material.PLAYER_HEAD, "&b分享权限", "&e你可以分享权限给好友",
                 "&e不要分享权限给陌生人",
