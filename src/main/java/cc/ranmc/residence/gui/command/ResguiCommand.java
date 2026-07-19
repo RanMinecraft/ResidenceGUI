@@ -2,6 +2,7 @@ package cc.ranmc.residence.gui.command;
 
 import cc.ranmc.residence.gui.Main;
 import cc.ranmc.residence.gui.util.BasicUtil;
+import cc.ranmc.residence.gui.util.InputUtil;
 import cc.ranmc.residence.gui.util.ResidenceUtil;
 
 import com.bekvon.bukkit.residence.api.ResidenceApi;
@@ -192,6 +193,16 @@ public class ResguiCommand implements CommandExecutor {
                              String[] args) {
 
         if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("create")) {
+                if (!(sender instanceof Player p)) {
+                    sender.sendMessage(color("&c该指令不能在控制台输入"));
+                    return true;
+                }
+                InputUtil.open(p, "创建领地", "请输入领地名", result ->
+                        p.chat("/res create " + result));
+                return true;
+            }
+
             if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("resgui.admin")) {
                     Main.getInstance().loadConfig();

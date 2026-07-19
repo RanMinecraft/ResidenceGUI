@@ -9,6 +9,8 @@ import cc.ranmc.residence.gui.util.ResidenceUtil;
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.event.ResidenceChangedEvent;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -444,19 +446,23 @@ public class GUIListener implements Listener {
         Player p = event.getPlayer();
         if (p.getInventory().getItemInMainHand().getType() != Material.WOODEN_HOE) return;
 
-        // 左键方块 -> 点击选取第一个点，弹出创建界面
+        // 左键方块 -> 点击选取第一个点
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            p.sendMessage(color("&a已选取第一个点"));
-            InputUtil.open(p, "创建领地", "请输入领地名", result ->
-                    p.chat("/res create " + result));
+            Component message = Component.text(color("&a已选取第一个点 "))
+                    .append(Component.text(color("&e[点击创建]"))
+                            .hoverEvent(Component.text("点击输入领地名创建领地"))
+                            .clickEvent(ClickEvent.runCommand("/resgui create")));
+            p.sendMessage(message);
             return;
         }
 
-        // 右键方块 -> 点击选取第二个点，弹出创建界面
+        // 右键方块 -> 点击选取第二个点
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            p.sendMessage(color("&a已选取第二个点"));
-            InputUtil.open(p, "创建领地", "请输入领地名", result ->
-                    p.chat("/res create " + result));
+            Component message = Component.text(color("&a已选取第二个点 "))
+                    .append(Component.text(color("&e[点击创建]"))
+                            .hoverEvent(Component.text("点击输入领地名创建领地"))
+                            .clickEvent(ClickEvent.runCommand("/resgui create")));
+            p.sendMessage(message);
             return;
         }
 
