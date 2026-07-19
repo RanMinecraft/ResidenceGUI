@@ -156,13 +156,15 @@ public class GUIListener implements Listener {
 
             if (event.getRawSlot() == 51) {
                 if (event.getClick() == ClickType.LEFT) {
-                    InputUtil.open(p, "设置进入消息", "欢迎%player来到" + claimedResidence.getResidenceName(), result -> {
+                    String currentMsg = claimedResidence.getEnterMessage() != null ? claimedResidence.getEnterMessage() : "";
+                    InputUtil.open(p, "设置领地进入消息", "", currentMsg, result -> {
                         claimedResidence.setEnterMessage(result);
                         p.sendMessage(color("&e消息文本已设置"));
                     });
                 }
                 if (event.getClick() == ClickType.RIGHT) {
-                    InputUtil.open(p, "设置离开消息", "%player离开了" + claimedResidence.getResidenceName(), result -> {
+                    String currentMsg = claimedResidence.getLeaveMessage() != null ? claimedResidence.getLeaveMessage() : "";
+                    InputUtil.open(p, "设置领地离开消息", "", currentMsg, result -> {
                         claimedResidence.setLeaveMessage(result);
                         p.sendMessage(color("&e消息文本已设置"));
                     });
