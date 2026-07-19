@@ -204,13 +204,13 @@ public class GUIListener implements Listener {
             }
 
             if (event.getRawSlot() == 52) {
-                p.chat("/resgui perm");
+                openPlayerPermList(p, claimedResidence, resName);
                 return;
             }
 
-            // 返回领地列表
+            // 返回公共权限菜单
             if (event.getRawSlot() == 45) {
-                ResguiCommand.openResidenceList(p);
+                ResguiCommand.openAdminGUI(p, claimedResidence);
                 return;
             }
 
@@ -255,9 +255,9 @@ public class GUIListener implements Listener {
                 return;
             }
 
-            // 返回领地列表
+            // 返回玩家权限菜单
             if (event.getRawSlot() == 45) {
-                ResguiCommand.openResidenceList(p);
+                openPlayerPermList(p, claimedResidence, resName);
                 return;
             }
 
@@ -304,8 +304,8 @@ public class GUIListener implements Listener {
                 ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.SHEARS, "&b剪取&f(shear)", "&e是否允许剪取羊毛", playerName);
                 ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.PEONY, "&b管理&f(admin)", "&e是否允许修改领地权限", playerName);
 
-                inventory.setItem(48, BasicUtil.createItem(Material.COMPARATOR, "&b删除权限", "§e对目标指定该玩家", "§e移除基本领地权限"));
-                inventory.setItem(50, BasicUtil.createItem(Material.BREWING_STAND, "&b转让领地", "§e对目标指定该玩家", "§e给予领地的所有权"));
+                inventory.setItem(48, BasicUtil.createItem(Material.COMPARATOR, "&b删除权限", "&e对目标指定该玩家", "&e移除基本领地权限"));
+                inventory.setItem(50, BasicUtil.createItem(Material.BREWING_STAND, "&b转让领地", "&e对目标指定该玩家", "&e给予领地的所有权"));
 
                 ItemStack closeItem = BasicUtil.createItem(Material.BARRIER, "&b返回菜单");
                 inventory.setItem(45, closeItem);
@@ -352,16 +352,16 @@ public class GUIListener implements Listener {
                 return;
             }
 
-            // 返回领地列表
+            // 返回玩家权限菜单
             if (event.getRawSlot() == 45) {
-                ResguiCommand.openResidenceList(p);
+                openPlayerPermList(p, claimedResidence, resName);
                 return;
             }
 
             if (event.getRawSlot() == 48) {
                 String playerName = ChatColor.stripColor(event.getView().getTitle()).split("丨")[1].replace("玩家", "");
                 p.chat("/res pset " + claimedResidence.getResidenceName() + " " + playerName + " removeall");
-                p.chat("/resgui perm");
+                openPlayerPermList(p, claimedResidence, resName);
                 return;
             }
 

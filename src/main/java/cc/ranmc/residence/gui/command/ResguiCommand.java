@@ -207,8 +207,6 @@ public class ResguiCommand implements CommandExecutor {
                     sender.sendMessage(color("&e===== &b领地管理 帮助 &e====="));
                     sender.sendMessage(color("&e/resgui &f- 打开领地列表"));
                     sender.sendMessage(color("&e/resgui list <玩家> &f- 查看指定玩家领地"));
-                    sender.sendMessage(color("&e/resgui perm &f- 打开当前领地玩家权限"));
-                    sender.sendMessage(color("&e/resgui admin &f- 管理当前领地 &7(快捷)"));
                     sender.sendMessage(color("&e/resgui help &f- 查看帮助"));
                     sender.sendMessage(color("&e/resgui reload &f- 重载配置文件 &7(管理员)"));
                 } else {
@@ -221,68 +219,6 @@ public class ResguiCommand implements CommandExecutor {
         // 以下指令不能在控制台输入
         if (!(sender instanceof Player p)) {
             BasicUtil.print("&c该指令不能在控制台输入");
-            return true;
-        }
-
-        // /resgui admin - 直接打开当前领地管理
-        if (args.length == 1 && args[0].equalsIgnoreCase("admin")) {
-            if (!sender.hasPermission("resgui.user")) {
-                sender.sendMessage(color("&c你没有权限这么做"));
-                return true;
-            }
-            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByLoc(p.getLocation());
-            if (claimedResidence == null) {
-                p.sendMessage(color("&c你当前不在领地内"));
-                return true;
-            }
-            openAdminGUI(p, claimedResidence);
-            return true;
-        }
-
-        if (args.length == 1 && args[0].equalsIgnoreCase("perm")) {
-            if (!sender.hasPermission("resgui.user")) {
-                sender.sendMessage(color("&c你没有权限这么做"));
-                return true;
-            }
-
-            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByLoc(p.getLocation());
-            if (claimedResidence == null) {
-                p.sendMessage(color("&c你当前不在领地内"));
-                return true;
-            }
-
-            List<String> permList = Arrays.asList(BasicUtil.removeBrackets(ChatColor.stripColor(claimedResidence.getPermissions().listPlayersFlags())).split(" "));
-            Boolean admin = false;
-            if (permList.contains(p.getName())) {
-                admin = claimedResidence.getPermissions().getPlayerFlags(p.getName()).get("admin");
-            }
-            if ((admin == null || !admin) && (!claimedResidence.getOwner().equalsIgnoreCase(p.getName()))) {
-                p.sendMessage(color("&c你没有权限设置该领地"));
-                return true;
-            }
-
-            Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨玩家权限丨" + claimedResidence.getResidenceName()));
-            int inventorySize = 0;
-            for (int i = 0; i < permList.size(); i++) {
-                if (i < 45 && !permList.get(i).equals(claimedResidence.getOwner())) {
-                    String line1 = "&e基础权限: &c否";
-                    if (claimedResidence.getPermissions().getPlayerFlags(permList.get(i)) == null) {
-                        line1 = "&e基础权限: &c否";
-                    } else if (claimedResidence.getPermissions().getPlayerFlags(permList.get(i)).get("build") == null) {
-                        line1 = "&e基础权限: &c未设置";
-                    } else if (claimedResidence.getPermissions().getPlayerFlags(permList.get(i)).get("build")) {
-                        line1 = "&e基础权限: &c是";
-                    }
-                    inventory.setItem(inventorySize, ResidenceUtil.createPermItem(Material.PLAYER_HEAD, "&b" + permList.get(i), line1, "&e查看更多详情"));
-                    inventorySize++;
-                }
-            }
-
-            inventory.setItem(49, BasicUtil.createItem(Material.OAK_SIGN, "&b添加玩家", "&e添加你受信任玩家", "&e给予基本领地权限"));
-            inventory.setItem(45, BasicUtil.createItem(Material.ARROW, "&b返回领地列表"));
-            inventory.setItem(53, BasicUtil.createItem(Material.BARRIER, "&b关闭菜单"));
-            BasicUtil.fillEmptySlots(inventory);
-            p.openInventory(inventory);
             return true;
         }
 
