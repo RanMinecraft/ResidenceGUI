@@ -107,7 +107,7 @@ public class ResguiCommand implements CommandExecutor {
             return;
         }
 
-        Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨公共权限"));
+        Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨公共权限丨" + claimedResidence.getResidenceName()));
 
         ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.DIAMOND_PICKAXE, "&b建筑&f(build)", "&e是否允许放置或破坏方块");
         ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.GRASS_BLOCK, "&b放置&f(place)", "&e是否允许放置方块");
@@ -261,7 +261,7 @@ public class ResguiCommand implements CommandExecutor {
                 return true;
             }
 
-            Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨玩家权限"));
+            Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨玩家权限丨" + claimedResidence.getResidenceName()));
             int inventorySize = 0;
             for (int i = 0; i < permList.size(); i++) {
                 if (i < 45 && !permList.get(i).equals(claimedResidence.getOwner())) {

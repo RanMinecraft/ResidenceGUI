@@ -99,9 +99,18 @@ public class GUIListener implements Listener {
             event.setCancelled(true);
             if (clicked == null) return;
 
-            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByLoc(p.getLocation());
+            // 从标题解析领地名 &b&l领地管理丨公共权限丨<名称>
+            String raw = ChatColor.stripColor(event.getView().getTitle());
+            String[] parts = raw.split("丨");
+            String resName = parts.length >= 3 ? parts[2] : null;
+            if (resName == null || resName.isEmpty()) {
+                p.sendMessage(color("&c无法获取领地信息"));
+                p.closeInventory();
+                return;
+            }
+            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByName(resName);
             if (claimedResidence == null) {
-                p.sendMessage(color("&c你当前不在领地内"));
+                p.sendMessage(color("&c该领地不存在"));
                 p.closeInventory();
                 return;
             }
@@ -215,9 +224,18 @@ public class GUIListener implements Listener {
             event.setCancelled(true);
             if (clicked == null) return;
 
-            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByLoc(p.getLocation());
+            // 从标题解析领地名
+            String raw = ChatColor.stripColor(event.getView().getTitle());
+            String[] parts = raw.split("丨");
+            String resName = parts.length >= 3 ? parts[2] : null;
+            if (resName == null || resName.isEmpty()) {
+                p.sendMessage(color("&c无法获取领地信息"));
+                p.closeInventory();
+                return;
+            }
+            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByName(resName);
             if (claimedResidence == null) {
-                p.sendMessage(color("&c你当前不在领地内"));
+                p.sendMessage(color("&c该领地不存在"));
                 p.closeInventory();
                 return;
             }
@@ -244,7 +262,7 @@ public class GUIListener implements Listener {
             }
 
             if (event.getRawSlot() == 49) {
-                Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨添加玩家"));
+                Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨添加玩家丨" + resName));
                 int invSize = 0;
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (!permList.contains(onlinePlayer.getName())) {
@@ -265,7 +283,7 @@ public class GUIListener implements Listener {
 
             if (event.getRawSlot() < 49 && event.getCurrentItem() != null) {
                 String playerName = Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName().replace("§b", "");
-                Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨玩家" + playerName));
+                Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨玩家" + playerName + "丨" + resName));
                 ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.DIAMOND_PICKAXE, "&b建筑&f(build)", "&e是否允许放置或破坏方块", playerName);
                 ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.GRASS_BLOCK, "&b放置&f(place)", "&e是否允许放置方块", playerName);
                 ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.IRON_AXE, "&b破坏&f(destroy)", "&e是否允许破坏方块", playerName);
@@ -298,13 +316,22 @@ public class GUIListener implements Listener {
             }
         }
 
-        if (event.getView().getTitle().contains(color("&b&l领地管理丨玩家"))) {
+        if (event.getView().getTitle().contains(color("&b&l领地管理丨玩家")) && !event.getView().getTitle().contains("添加")) {
             event.setCancelled(true);
             if (clicked == null) return;
 
-            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByLoc(p.getLocation());
+            // 从标题解析领地名 &b&l领地管理丨玩家<player>丨<name>
+            String raw = ChatColor.stripColor(event.getView().getTitle());
+            String[] parts = raw.split("丨");
+            String resName = parts.length >= 3 ? parts[2] : null;
+            if (resName == null || resName.isEmpty()) {
+                p.sendMessage(color("&c无法获取领地信息"));
+                p.closeInventory();
+                return;
+            }
+            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByName(resName);
             if (claimedResidence == null) {
-                p.sendMessage(color("&c你当前不在领地内"));
+                p.sendMessage(color("&c该领地不存在"));
                 p.closeInventory();
                 return;
             }
@@ -320,7 +347,8 @@ public class GUIListener implements Listener {
             }
 
             if (event.getRawSlot() == 53) {
-                p.chat("/resgui perm");
+                // 返回玩家权限菜单
+                openPlayerPermList(p, claimedResidence, resName);
                 return;
             }
 
@@ -331,13 +359,15 @@ public class GUIListener implements Listener {
             }
 
             if (event.getRawSlot() == 48) {
-                p.chat("/res pset " + claimedResidence.getResidenceName() + " " + event.getView().getTitle().split("玩家")[1] + " removeall");
+                String playerName = ChatColor.stripColor(event.getView().getTitle()).split("丨")[1].replace("玩家", "");
+                p.chat("/res pset " + claimedResidence.getResidenceName() + " " + playerName + " removeall");
                 p.chat("/resgui perm");
                 return;
             }
 
             if (event.getRawSlot() == 50) {
-                p.chat("/res give " + claimedResidence.getResidenceName() + " " + event.getView().getTitle().split("玩家")[1]);
+                String playerName = ChatColor.stripColor(event.getView().getTitle()).split("丨")[1].replace("玩家", "");
+                p.chat("/res give " + claimedResidence.getResidenceName() + " " + playerName);
                 p.closeInventory();
                 return;
             }
@@ -345,7 +375,8 @@ public class GUIListener implements Listener {
             if (event.getRawSlot() < 49 && event.getCurrentItem() != null) {
                 String permName = Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName();
                 permName = permName.substring(permName.indexOf("(") + 1, permName.indexOf(")"));
-                ResidenceUtil.setFlag(event, permName, claimedResidence, event.getView().getTitle().split("玩家")[1]);
+                String playerName = ChatColor.stripColor(event.getView().getTitle()).split("丨")[1].replace("玩家", "");
+                ResidenceUtil.setFlag(event, permName, claimedResidence, playerName);
                 return;
             }
         }
@@ -354,9 +385,18 @@ public class GUIListener implements Listener {
             event.setCancelled(true);
             if (clicked == null) return;
 
-            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByLoc(p.getLocation());
+            // 从标题解析领地名
+            String raw = ChatColor.stripColor(event.getView().getTitle());
+            String[] parts = raw.split("丨");
+            String resName = parts.length >= 3 ? parts[2] : null;
+            if (resName == null || resName.isEmpty()) {
+                p.sendMessage(color("&c无法获取领地信息"));
+                p.closeInventory();
+                return;
+            }
+            ClaimedResidence claimedResidence = ResidenceApi.getResidenceManager().getByName(resName);
             if (claimedResidence == null) {
-                p.sendMessage(color("&c你当前不在领地内"));
+                p.sendMessage(color("&c该领地不存在"));
                 p.closeInventory();
                 return;
             }
@@ -372,7 +412,8 @@ public class GUIListener implements Listener {
             }
 
             if (event.getRawSlot() == 53) {
-                p.chat("/resgui perm");
+                // 返回玩家权限菜单
+                openPlayerPermList(p, claimedResidence, resName);
                 return;
             }
 
@@ -386,14 +427,14 @@ public class GUIListener implements Listener {
                 InputUtil.open(p, "添加玩家权限", "请输入玩家名称",
                         result -> {
                             p.chat("/res padd " + claimedResidence.getResidenceName() + " " + result);
-                            p.chat("/resgui perm");
+                            openPlayerPermList(p, claimedResidence, resName);
                         });
                 return;
             }
 
             if (event.getRawSlot() < 49 && event.getCurrentItem() != null) {
                 p.chat("/res padd " + claimedResidence.getResidenceName() + " " + ChatColor.stripColor(Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName()));
-                p.chat("/resgui perm");
+                openPlayerPermList(p, claimedResidence, resName);
             }
         }
     }
@@ -409,5 +450,30 @@ public class GUIListener implements Listener {
                 p.chat("/resgui");
             }
         }
+    }
+
+    private static void openPlayerPermList(Player p, ClaimedResidence residence, String resName) {
+        List<String> permList = Arrays.asList(BasicUtil.removeBrackets(ChatColor.stripColor(residence.getPermissions().listPlayersFlags())).split(" "));
+        Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨玩家权限丨" + resName));
+        int invSize = 0;
+        for (int i = 0; i < permList.size(); i++) {
+            if (i < 45 && !permList.get(i).equals(residence.getOwner())) {
+                String line1 = "&e基础权限: &c否";
+                if (residence.getPermissions().getPlayerFlags(permList.get(i)) == null) {
+                    line1 = "&e基础权限: &c否";
+                } else if (residence.getPermissions().getPlayerFlags(permList.get(i)).get("build") == null) {
+                    line1 = "&e基础权限: &c未设置";
+                } else if (residence.getPermissions().getPlayerFlags(permList.get(i)).get("build")) {
+                    line1 = "&e基础权限: &c是";
+                }
+                inventory.setItem(invSize, ResidenceUtil.createPermItem(Material.PLAYER_HEAD, "&b" + permList.get(i), line1, "&e查看更多详情"));
+                invSize++;
+            }
+        }
+        inventory.setItem(49, BasicUtil.createItem(Material.OAK_SIGN, "&b添加玩家", "&e添加你受信任玩家", "&e给予基本领地权限"));
+        inventory.setItem(45, BasicUtil.createItem(Material.ARROW, "&b返回领地列表"));
+        inventory.setItem(53, BasicUtil.createItem(Material.BARRIER, "&b关闭菜单"));
+        BasicUtil.fillEmptySlots(inventory);
+        p.openInventory(inventory);
     }
 }
