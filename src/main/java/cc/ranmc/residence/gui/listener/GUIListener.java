@@ -4,6 +4,8 @@ import cc.ranmc.residence.gui.Main;
 import cc.ranmc.residence.gui.command.ResguiCommand;
 import cc.ranmc.residence.gui.util.BasicUtil;
 import cc.ranmc.residence.gui.util.InputUtil;
+import cc.ranmc.residence.gui.util.ResidenceUtil;
+
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.event.ResidenceChangedEvent;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
@@ -117,7 +119,7 @@ public class GUIListener implements Listener {
             if (event.getRawSlot() <= 35 && event.getCurrentItem() != null) {
                 String permName = Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName();
                 permName = permName.substring(permName.indexOf("(") + 1, permName.indexOf(")"));
-                BasicUtil.setFlag(event, permName, claimedResidence);
+                ResidenceUtil.setFlag(event, permName, claimedResidence);
                 return;
             }
 
@@ -176,11 +178,11 @@ public class GUIListener implements Listener {
                 }
                 Location lowloc = claimedResidence.getAreaArray()[0].getLowLoc();
                 Location highloc = claimedResidence.getAreaArray()[0].getHighLoc();
-                BasicUtil.showEdge(p, lowloc, highloc);
+                ResidenceUtil.showEdge(p, lowloc, highloc);
 
                 long hideDelay = plugin.getConfig().getInt("glass-show-time", 5);
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
-                        BasicUtil.hideEdge(p, lowloc, highloc), hideDelay * 20);
+                        ResidenceUtil.hideEdge(p, lowloc, highloc), hideDelay * 20);
                 return;
             }
 
@@ -262,25 +264,25 @@ public class GUIListener implements Listener {
             if (event.getRawSlot() < 49 && event.getCurrentItem() != null) {
                 String playerName = Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName().replace("§b", "");
                 Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨玩家" + playerName));
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.DIAMOND_PICKAXE, "&b建筑&f(build)", "&e是否允许放置或破坏方块", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.GRASS_BLOCK, "&b放置&f(place)", "&e是否允许放置方块", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.IRON_AXE, "&b破坏&f(destroy)", "&e是否允许破坏方块", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.LEVER, "&b交互&f(use)", "&e是否允许与拉杆/门/工作台等交互", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.CHEST_MINECART, "&b容器&f(container)", "&e是否允许与箱子/漏斗等交互", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ENDER_EYE, "&b传送&f(tp)", "&e是否允许传送至领地", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.SADDLE, "&b骑乘&f(riding)", "&e是否允许骑乘生物", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.COOKED_BEEF, "&b攻击动物&f(animalkilling)", "&e是否允许攻击动物", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ROTTEN_FLESH, "&b攻击怪物&f(mobkilling)", "&e是否允许攻击怪物", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ENDER_PEARL, "&b末影珍珠&f(enderpearl)", "&e是否允许使用末影珍珠进入", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.OAK_BOAT, "&b破坏载具&f(vehicledstroy)", "&e是否允许破坏载具", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.CHORUS_FRUIT, "&b紫颂果&f(chorustp)", "&e是否允许使用紫颂果", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.NOTE_BLOCK, "&b音符盒&f(note)", "&e是否允许使用音符", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.LEAD, "&b拴绳&f(leash)", "&e是否允许牵引动物", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.FLINT_AND_STEEL, "&b点火&f(ignite)", "&e是否允许使用打火石", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ARROW, "&b射箭&f(shoot)", "&e是否允许使用弓弩", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.INK_SAC, "&b染色&f(dye)", "&e是否允许使用染色", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.SHEARS, "&b剪取&f(shear)", "&e是否允许剪取羊毛", playerName);
-                BasicUtil.CreatePermButton(claimedResidence, inventory, Material.PEONY, "&b管理&f(admin)", "&e是否允许修改领地权限", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.DIAMOND_PICKAXE, "&b建筑&f(build)", "&e是否允许放置或破坏方块", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.GRASS_BLOCK, "&b放置&f(place)", "&e是否允许放置方块", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.IRON_AXE, "&b破坏&f(destroy)", "&e是否允许破坏方块", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.LEVER, "&b交互&f(use)", "&e是否允许与拉杆/门/工作台等交互", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.CHEST_MINECART, "&b容器&f(container)", "&e是否允许与箱子/漏斗等交互", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ENDER_EYE, "&b传送&f(tp)", "&e是否允许传送至领地", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.SADDLE, "&b骑乘&f(riding)", "&e是否允许骑乘生物", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.COOKED_BEEF, "&b攻击动物&f(animalkilling)", "&e是否允许攻击动物", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ROTTEN_FLESH, "&b攻击怪物&f(mobkilling)", "&e是否允许攻击怪物", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ENDER_PEARL, "&b末影珍珠&f(enderpearl)", "&e是否允许使用末影珍珠进入", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.OAK_BOAT, "&b破坏载具&f(vehicledstroy)", "&e是否允许破坏载具", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.CHORUS_FRUIT, "&b紫颂果&f(chorustp)", "&e是否允许使用紫颂果", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.NOTE_BLOCK, "&b音符盒&f(note)", "&e是否允许使用音符", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.LEAD, "&b拴绳&f(leash)", "&e是否允许牵引动物", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.FLINT_AND_STEEL, "&b点火&f(ignite)", "&e是否允许使用打火石", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ARROW, "&b射箭&f(shoot)", "&e是否允许使用弓弩", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.INK_SAC, "&b染色&f(dye)", "&e是否允许使用染色", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.SHEARS, "&b剪取&f(shear)", "&e是否允许剪取羊毛", playerName);
+                ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.PEONY, "&b管理&f(admin)", "&e是否允许修改领地权限", playerName);
 
                 inventory.setItem(48, BasicUtil.createItem(Material.COMPARATOR, "&b删除权限", "§e对目标指定该玩家", "§e移除基本领地权限"));
                 inventory.setItem(50, BasicUtil.createItem(Material.BREWING_STAND, "&b转让领地", "§e对目标指定该玩家", "§e给予领地的所有权"));
@@ -341,7 +343,7 @@ public class GUIListener implements Listener {
             if (event.getRawSlot() < 49 && event.getCurrentItem() != null) {
                 String permName = Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName();
                 permName = permName.substring(permName.indexOf("(") + 1, permName.indexOf(")"));
-                BasicUtil.setFlag(event, permName, claimedResidence, event.getView().getTitle().split("玩家")[1]);
+                ResidenceUtil.setFlag(event, permName, claimedResidence, event.getView().getTitle().split("玩家")[1]);
                 return;
             }
         }

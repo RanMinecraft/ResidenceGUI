@@ -2,6 +2,8 @@ package cc.ranmc.residence.gui.command;
 
 import cc.ranmc.residence.gui.Main;
 import cc.ranmc.residence.gui.util.BasicUtil;
+import cc.ranmc.residence.gui.util.ResidenceUtil;
+
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.ResidenceManager;
@@ -107,41 +109,41 @@ public class ResguiCommand implements CommandExecutor {
 
         Inventory inventory = Bukkit.createInventory(null, 54, color("&b&l领地管理丨公共权限"));
 
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.DIAMOND_PICKAXE, "&b建筑&f(build)", "&e是否允许放置或破坏方块");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.GRASS_BLOCK, "&b放置&f(place)", "&e是否允许放置方块");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.IRON_AXE, "&b破坏&f(destroy)", "&e是否允许破坏方块");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.LEVER, "&b交互&f(use)", "&e是否允许与拉杆/门/工作台等交互");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.CHEST_MINECART, "&b容器&f(container)", "&e是否允许与箱子/漏斗等交互");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ENDER_EYE, "&b传送&f(tp)", "&e是否允许传送至领地");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.SADDLE, "&b骑乘&f(riding)", "&e是否允许骑乘生物");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.COOKED_BEEF, "&b攻击动物&f(animalkilling)", "&e是否允许攻击动物");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ROTTEN_FLESH, "&b攻击怪物&f(mobkilling)", "&e是否允许攻击怪物");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.SHEEP_SPAWN_EGG, "&b生成动物&f(animals)", "&e是否允许生成动物");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.SKELETON_SPAWN_EGG, "&b生成怪物&f(monsters)", "&e是否允许生成怪物");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.LILY_PAD, "&b怪物进入&f(nomobs)", "&e是否允许怪物进入");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.WATER_BUCKET, "&b液体流动&f(flow)", "&e是否允许液体流动");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ENDER_PEARL, "&b末影珍珠&f(enderpearl)", "&e是否允许使用末影珍珠进入");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.OAK_BOAT, "&b破坏载具&f(vehicledestroy)", "&e是否允许破坏载具");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.DIRT, "&b耕地保护&f(trample)", "&e是否开启耕地保护");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.CHORUS_FRUIT, "&b紫颂果&f(chorustp)", "&e是否允许使用紫颂果");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.NOTE_BLOCK, "&b音符盒&f(note)", "&e是否允许使用音符");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.WHEAT_SEEDS, "&b生长&f(grow)", "&e是否允许农作物生长");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.LEAD, "&b拴绳&f(leash)", "&e是否允许牵引动物");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.FLINT_AND_STEEL, "&b点火&f(ignite)", "&e是否允许使用打火石");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.BLAZE_POWDER, "&b火势蔓延&f(firespread)", "&e是否允许火势蔓延");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.TNT, "&b爆炸&f(explode)", "&e是否允许爆炸伤害");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.DIAMOND_SWORD, "&b格斗&f(pvp)", "&e是否允许玩家伤害");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ARROW, "&b射箭&f(shoot)", "&e是否允许使用弓弩");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.INK_SAC, "&b染色&f(dye)", "&e是否允许使用染色");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.PISTON, "&b活塞&f(piston)", "&e是否允许活塞工作");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.SHEARS, "&b剪取&f(shear)", "&e是否允许剪取羊毛");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.ICE, "&b融化&f(icemelt)", "&e是否允许冰雪融化");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.BLUE_ICE, "&b阻止冰霜行者&f(iceform)", "&e是否阻止冰霜行者生效");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.YELLOW_DYE, "&b永昼&f(day)", "&e是否开启领地内白天");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.BLACK_DYE, "&b永夜&f(night)", "&e是否开启领地内夜天");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.SUNFLOWER, "&b晴天&f(sun)", "&e是否开启领地内晴天");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.BLUE_ORCHID, "&b雨天&f(rain)", "&e是否开启领地内雨天");
-        BasicUtil.CreatePermButton(claimedResidence, inventory, Material.FEATHER, "&b飞行&f(svip)", "&e是否允许s/vip领地内飞行");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.DIAMOND_PICKAXE, "&b建筑&f(build)", "&e是否允许放置或破坏方块");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.GRASS_BLOCK, "&b放置&f(place)", "&e是否允许放置方块");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.IRON_AXE, "&b破坏&f(destroy)", "&e是否允许破坏方块");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.LEVER, "&b交互&f(use)", "&e是否允许与拉杆/门/工作台等交互");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.CHEST_MINECART, "&b容器&f(container)", "&e是否允许与箱子/漏斗等交互");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ENDER_EYE, "&b传送&f(tp)", "&e是否允许传送至领地");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.SADDLE, "&b骑乘&f(riding)", "&e是否允许骑乘生物");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.COOKED_BEEF, "&b攻击动物&f(animalkilling)", "&e是否允许攻击动物");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ROTTEN_FLESH, "&b攻击怪物&f(mobkilling)", "&e是否允许攻击怪物");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.SHEEP_SPAWN_EGG, "&b生成动物&f(animals)", "&e是否允许生成动物");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.SKELETON_SPAWN_EGG, "&b生成怪物&f(monsters)", "&e是否允许生成怪物");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.LILY_PAD, "&b怪物进入&f(nomobs)", "&e是否允许怪物进入");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.WATER_BUCKET, "&b液体流动&f(flow)", "&e是否允许液体流动");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ENDER_PEARL, "&b末影珍珠&f(enderpearl)", "&e是否允许使用末影珍珠进入");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.OAK_BOAT, "&b破坏载具&f(vehicledestroy)", "&e是否允许破坏载具");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.DIRT, "&b耕地保护&f(trample)", "&e是否开启耕地保护");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.CHORUS_FRUIT, "&b紫颂果&f(chorustp)", "&e是否允许使用紫颂果");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.NOTE_BLOCK, "&b音符盒&f(note)", "&e是否允许使用音符");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.WHEAT_SEEDS, "&b生长&f(grow)", "&e是否允许农作物生长");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.LEAD, "&b拴绳&f(leash)", "&e是否允许牵引动物");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.FLINT_AND_STEEL, "&b点火&f(ignite)", "&e是否允许使用打火石");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.BLAZE_POWDER, "&b火势蔓延&f(firespread)", "&e是否允许火势蔓延");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.TNT, "&b爆炸&f(explode)", "&e是否允许爆炸伤害");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.DIAMOND_SWORD, "&b格斗&f(pvp)", "&e是否允许玩家伤害");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ARROW, "&b射箭&f(shoot)", "&e是否允许使用弓弩");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.INK_SAC, "&b染色&f(dye)", "&e是否允许使用染色");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.PISTON, "&b活塞&f(piston)", "&e是否允许活塞工作");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.SHEARS, "&b剪取&f(shear)", "&e是否允许剪取羊毛");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.ICE, "&b融化&f(icemelt)", "&e是否允许冰雪融化");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.BLUE_ICE, "&b阻止冰霜行者&f(iceform)", "&e是否阻止冰霜行者生效");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.YELLOW_DYE, "&b永昼&f(day)", "&e是否开启领地内白天");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.BLACK_DYE, "&b永夜&f(night)", "&e是否开启领地内夜天");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.SUNFLOWER, "&b晴天&f(sun)", "&e是否开启领地内晴天");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.BLUE_ORCHID, "&b雨天&f(rain)", "&e是否开启领地内雨天");
+        ResidenceUtil.CreatePermButton(claimedResidence, inventory, Material.FEATHER, "&b飞行&f(svip)", "&e是否允许s/vip领地内飞行");
 
         ItemStack item2 = new ItemStack(Material.ENCHANTED_BOOK);
         ItemMeta meta2 = item2.getItemMeta();
@@ -167,7 +169,7 @@ public class ResguiCommand implements CommandExecutor {
         inventory.setItem(46, BasicUtil.createItem(Material.BEACON, "&b设置传送点", "&e记录你所在位置", "&e设为领地传送点"));
         inventory.setItem(47, BasicUtil.createItem(Material.POWERED_RAIL, "&b显示边界", "&e显示领地实际边界"));
         inventory.setItem(48, BasicUtil.createItem(Material.LAVA_BUCKET, "&b删除领地", "&e删除不会退还金币", "&e请谨慎决定后操作"));
-        inventory.setItem(50, BasicUtil.createItem(Material.WOODEN_HOE, "&b调整范围", "&e左键扩大领地", "&e右键缩小领地",
+        inventory.setItem(50, BasicUtil.createItem(Material.WOODEN_HOE, "&b调整范围", 
                 "&e扩大需看着需要扩大的方向",
                 "&e缩小需看着需要缩小的方向"));
         inventory.setItem(51, BasicUtil.createItem(Material.LEATHER, "&b设置提示", "&e左键设置进入领地消息", "&e右键设置离开领地消息"));
@@ -271,7 +273,7 @@ public class ResguiCommand implements CommandExecutor {
                     } else if (claimedResidence.getPermissions().getPlayerFlags(permList.get(i)).get("build")) {
                         line1 = "&e基础权限: &c是";
                     }
-                    inventory.setItem(inventorySize, BasicUtil.createPermItem(Material.PLAYER_HEAD, "&b" + permList.get(i), line1, "&e查看更多详情"));
+                    inventory.setItem(inventorySize, ResidenceUtil.createPermItem(Material.PLAYER_HEAD, "&b" + permList.get(i), line1, "&e查看更多详情"));
                     inventorySize++;
                 }
             }
