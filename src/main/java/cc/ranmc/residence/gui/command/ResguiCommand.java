@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static cc.ranmc.residence.gui.util.BasicUtil.color;
+import static cc.ranmc.residence.gui.util.ResidenceUtil.getResCommand;
 
 public class ResguiCommand implements CommandExecutor {
 
@@ -199,7 +200,7 @@ public class ResguiCommand implements CommandExecutor {
                     return true;
                 }
                 InputUtil.open(p, "创建领地", "请输入领地名", result ->
-                        p.chat("/res create " + result));
+                        p.chat(getResCommand(p) + " create " + result));
                 return true;
             }
 

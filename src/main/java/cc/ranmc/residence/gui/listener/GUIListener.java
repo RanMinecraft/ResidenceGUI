@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static cc.ranmc.residence.gui.util.BasicUtil.color;
+import static cc.ranmc.residence.gui.util.ResidenceUtil.getResCommand;
 
 public class GUIListener implements Listener {
 
@@ -135,7 +136,7 @@ public class GUIListener implements Listener {
             }
 
             if (event.getRawSlot() == 46) {
-                p.chat("/res tpset");
+                p.chat(getResCommand(p) + " tpset");
                 p.closeInventory();
                 return;
             }
@@ -146,7 +147,7 @@ public class GUIListener implements Listener {
                     InputUtil.open(p, "扩大领地", "请输入要扩大的格数", result -> {
                         try {
                             int amount = Integer.parseInt(result);
-                            p.chat("/res expand " + amount);
+                            p.chat(getResCommand(p) + " expand " + amount);
                         } catch (NumberFormatException e) {
                             p.sendMessage(color("&c请输入有效的数字"));
                         }
@@ -156,7 +157,7 @@ public class GUIListener implements Listener {
                     InputUtil.open(p, "缩小领地", "请输入要缩小的格数", result -> {
                         try {
                             int amount = Integer.parseInt(result);
-                            p.chat("/res contract " + amount);
+                            p.chat(getResCommand(p) + " contract " + amount);
                         } catch (NumberFormatException e) {
                             p.sendMessage(color("&c请输入有效的数字"));
                         }
@@ -186,7 +187,7 @@ public class GUIListener implements Listener {
             if (event.getRawSlot() == 47) {
                 p.closeInventory();
                 if (Math.abs(claimedResidence.getTotalSize()) > 15360000) {
-                    p.chat("/res show");
+                    p.chat(getResCommand(p) + " show");
                     return;
                 }
                 Location lowloc = claimedResidence.getAreaArray()[0].getLowLoc();
@@ -200,7 +201,7 @@ public class GUIListener implements Listener {
             }
 
             if (event.getRawSlot() == 48) {
-                p.chat("/res remove " + claimedResidence.getResidenceName());
+                p.chat(getResCommand(p) + " remove " + claimedResidence.getResidenceName());
                 p.closeInventory();
                 return;
             }
@@ -362,14 +363,14 @@ public class GUIListener implements Listener {
 
             if (event.getRawSlot() == 48) {
                 String playerName = ChatColor.stripColor(event.getView().getTitle()).split("丨")[1].replace("玩家", "");
-                p.chat("/res pset " + claimedResidence.getResidenceName() + " " + playerName + " removeall");
+                p.chat(getResCommand(p) + " pset " + claimedResidence.getResidenceName() + " " + playerName + " removeall");
                 openPlayerPermList(p, claimedResidence, resName);
                 return;
             }
 
             if (event.getRawSlot() == 50) {
                 String playerName = ChatColor.stripColor(event.getView().getTitle()).split("丨")[1].replace("玩家", "");
-                p.chat("/res give " + claimedResidence.getResidenceName() + " " + playerName);
+                p.chat(getResCommand(p) + " give " + claimedResidence.getResidenceName() + " " + playerName);
                 p.closeInventory();
                 return;
             }
@@ -428,14 +429,14 @@ public class GUIListener implements Listener {
             if (event.getRawSlot() == 49) {
                 InputUtil.open(p, "添加玩家权限", "请输入玩家名称",
                         result -> {
-                            p.chat("/res padd " + claimedResidence.getResidenceName() + " " + result);
+                            p.chat(getResCommand(p) + " padd " + claimedResidence.getResidenceName() + " " + result);
                             openPlayerPermList(p, claimedResidence, resName);
                         });
                 return;
             }
 
             if (event.getRawSlot() < 49 && event.getCurrentItem() != null) {
-                p.chat("/res padd " + claimedResidence.getResidenceName() + " " + ChatColor.stripColor(Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName()));
+                p.chat(getResCommand(p) + " padd " + claimedResidence.getResidenceName() + " " + ChatColor.stripColor(Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName()));
                 openPlayerPermList(p, claimedResidence, resName);
             }
         }

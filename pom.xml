@@ -6,7 +6,7 @@
 
     <groupId>cc.ranmc.residence.gui</groupId>
     <artifactId>ResidenceGUI</artifactId>
-    <version>Release-4.0</version>
+    <version>Release-4.1</version>
 
     <properties>
         <java.version>26</java.version>

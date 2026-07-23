@@ -20,6 +20,10 @@ import static cc.ranmc.residence.gui.util.BasicUtil.color;
 
 public class ResidenceUtil {
 
+    public static String getResCommand(Player p) {
+        return p.isOp() ? "/resadmin" : "/res";
+    }
+
     public static void showEdge(Player p, Location lowloc, Location highloc) {
         for (int i = 0; i <= highloc.getBlockX() - lowloc.getBlockX(); i++) {
             Location loc = new Location(lowloc.getWorld(), lowloc.getBlockX(), lowloc.getBlockY(), lowloc.getBlockZ());
@@ -67,39 +71,39 @@ public class ResidenceUtil {
             Location loc = new Location(lowloc.getWorld(), lowloc.getBlockX(), lowloc.getBlockY(), lowloc.getBlockZ());
             if (loc.getChunk().isLoaded()) {
                 loc.setX(lowloc.getBlockX() + i);
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setZ(highloc.getBlockZ());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setY(highloc.getBlockY());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setZ(lowloc.getBlockZ());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
             }
         }
         for (int i = 0; i <= highloc.getBlockZ() - lowloc.getBlockZ(); i++) {
             Location loc = new Location(lowloc.getWorld(), lowloc.getBlockX(), lowloc.getBlockY(), lowloc.getBlockZ());
             if (loc.getChunk().isLoaded()) {
                 loc.setZ(lowloc.getBlockZ() + i);
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setX(highloc.getBlockX());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setY(highloc.getBlockY());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setX(lowloc.getBlockX());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
             }
         }
         for (int i = 0; i <= highloc.getBlockY() - lowloc.getBlockY(); i++) {
             Location loc = new Location(lowloc.getWorld(), lowloc.getBlockX(), lowloc.getBlockY(), lowloc.getBlockZ());
             if (loc.getChunk().isLoaded()) {
                 loc.setY(lowloc.getBlockY() + i);
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setX(highloc.getBlockX());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setZ(highloc.getBlockZ());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
                 loc.setX(lowloc.getBlockX());
-                p.sendBlockChange(loc, loc.getBlock().getType(), (byte) 0);
+                p.sendBlockChange(loc, loc.getBlock().getBlockData());
             }
         }
     }
