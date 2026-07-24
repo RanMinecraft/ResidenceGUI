@@ -41,12 +41,15 @@ public class ResguiCommand implements CommandExecutor {
      * 打开领地列表
      * @param viewer   查看者
      * @param owner    领地主人
-     * @param canManage 是否可管理（自己的领地可左键管理，别人的只可查看）
+     * @param canManage 是否可管理
      */
     public static void openResidenceList(Player viewer, String owner, boolean canManage) {
+        boolean canManageTitle = canManage;
+        if (viewer.isOp()) canManage = true;
+
         ResidenceManager manager = (ResidenceManager) ResidenceApi.getResidenceManager();
         Map<String, ClaimedResidence> all = manager.getResidenceMapList(owner, true);
-        String title = canManage ? "&b&l领地管理丨领地列表" : "&b&l领地管理丨" + owner + "的领地";
+        String title = canManageTitle ? "&b&l领地管理丨领地列表" : "&b&l领地管理丨" + owner + "的领地";
         Inventory inventory = Bukkit.createInventory(null, 54, color(title));
 
         int slot = 0;
@@ -65,31 +68,21 @@ public class ResguiCommand implements CommandExecutor {
             }
         }
 
-        // 当前所在地信息（仅自己的领地）
-        if (canManage) {
-            ClaimedResidence current = ResidenceApi.getResidenceManager().getByLoc(viewer.getLocation());
-            if (current != null) {
-                List<String> lore = new ArrayList<>();
-                lore.add(color("&e领地名: " + current.getResidenceName()));
-                lore.add(color("&e领地主人: " + current.getOwner()));
+        // 当前所在地信息
+        ClaimedResidence current = ResidenceApi.getResidenceManager().getByLoc(viewer.getLocation());
+        if (current != null) {
+            List<String> lore = new ArrayList<>();
+            lore.add(color("&e领地名: " + current.getResidenceName()));
+            lore.add(color("&e领地主人: " + current.getOwner()));
+            if (canManage) {
                 lore.add(color("&e点击快速管理"));
-                inventory.setItem(49, BasicUtil.createItem(Material.ENCHANTED_BOOK, "&b当前领地", lore.toArray(new String[0])));
             }
+            inventory.setItem(49, BasicUtil.createItem(Material.ENCHANTED_BOOK, "&b当前领地", lore.toArray(new String[0])));
         }
 
         // 底部按钮
         inventory.setItem(45, BasicUtil.createItem(Material.BARRIER, "&b关闭菜单"));
         BasicUtil.fillEmptySlots(inventory);
-        if (canManage) {
-            ClaimedResidence current = ResidenceApi.getResidenceManager().getByLoc(viewer.getLocation());
-            if (current != null) {
-                List<String> lore = new ArrayList<>();
-                lore.add(color("&e领地名: " + current.getResidenceName()));
-                lore.add(color("&e领地主人: " + current.getOwner()));
-                lore.add(color("&e点击快速管理"));
-                inventory.setItem(49, BasicUtil.createItem(Material.ENCHANTED_BOOK, "&b当前领地", lore.toArray(new String[0])));
-            }
-        }
         inventory.setItem(53, BasicUtil.createItem(Material.BARRIER, "&b关闭菜单"));
 
         viewer.openInventory(inventory);

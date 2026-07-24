@@ -65,7 +65,7 @@ public class GUIListener implements Listener {
                     p.sendMessage(color("&c找不到该领地"));
                     return;
                 }
-                if (event.getClick() == ClickType.RIGHT || !isOwnList) {
+                if (event.getClick() == ClickType.RIGHT || (!isOwnList && !p.isOp())) {
                     // 右键传送，或查看别人的领地时左键也传送
                     if (res.getTeleportLocation(p) != null) {
                         p.teleportAsync(res.getTeleportLocation(p));
